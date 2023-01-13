@@ -15,6 +15,11 @@ export default function NavBar() {
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
         </button>
+        <Link passHref href="/users">
+          <a className="nav-link">
+            User
+          </a>
+        </Link>
 
         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
           <ul className="navbar-nav me-auto">
