@@ -1,7 +1,7 @@
 import { clientCredentials } from '../client';
 
 const getBangazonUsers = (uid = '') => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/user`, {
+  fetch(`${clientCredentials.databaseURL}/users`, {
     method: 'GET',
     headers: {
       Authorization: uid,
@@ -19,16 +19,16 @@ const getBangazonUsers = (uid = '') => new Promise((resolve, reject) => {
 });
 
 const getUserById = (id) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/user/${id}`)
+  fetch(`${clientCredentials.databaseURL}/users/${id}`)
     .then((response) => response.json())
     .then((data) => {
       resolve({
         id: data.id,
-        uid: data.uid,
         firstName: data.first_name,
         lastName: data.last_name,
-        imageUrl: data.image_url,
+        uid: data.uid,
         createdOn: data.created_on,
+        imageUrl: data.image_url,
       });
     })
     .catch(reject);
@@ -42,7 +42,7 @@ const createUser = (user, post) => new Promise((resolve, reject) => {
     image_url: post.image_url,
     createdOn: post.acreated_on,
   };
-  fetch(`${clientCredentials.databaseURL}/user`, {
+  fetch(`${clientCredentials.databaseURL}/users`, {
     method: 'POST',
     body: JSON.stringify(userObj),
     headers: {
@@ -62,7 +62,7 @@ const updateUser = (user, put, id) => new Promise((resolve, reject) => {
     image_url: put.image_url,
     createdOn: put.created_on,
   };
-  fetch(`${clientCredentials.databaseURL}/user/${id}`, {
+  fetch(`${clientCredentials.databaseURL}/users/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ const updateUser = (user, put, id) => new Promise((resolve, reject) => {
 });
 
 const deleteUser = (id) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/user/${id}`, {
+  fetch(`${clientCredentials.databaseURL}/users/${id}`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
   })

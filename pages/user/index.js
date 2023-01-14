@@ -9,7 +9,6 @@ function Home() {
   const [bangazonUsers, setBangazonUsers] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
-  // console.warn(bangazonUsers);
   useEffect(() => {
     getBangazonUsers(user.uid).then((setBangazonUsers));
   }, []);

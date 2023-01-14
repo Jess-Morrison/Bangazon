@@ -7,6 +7,7 @@ export default function ViewUser() {
   const [viewUsers, setViewUser] = useState([]);
   const router = useRouter();
   const { id } = router.query;
+  console.warn(viewUsers.firstName);
 
   useEffect(() => {
     getUserById(id).then(setViewUser);
@@ -15,12 +16,15 @@ export default function ViewUser() {
   return (
     <div className="view-card">
       <UserCard
-        key={id}
+        key={viewUsers}
+        // userCardObj={getUserById}
         id={viewUsers.id}
-        firstName={viewUsers.first_name}
-        lastName={viewUsers.last_name}
-        createdOn={viewUsers.created_on}
-        imageUrl={viewUsers.image_url}
+        firstName={viewUsers.firstName}
+        lastName={viewUsers.lastName}
+        uid={viewUsers.uid}
+        createdOn={viewUsers.createdOn}
+        imageUrl={viewUsers.imageUrl}
+        onUpdate={getUserById}
       />
     </div>
   );

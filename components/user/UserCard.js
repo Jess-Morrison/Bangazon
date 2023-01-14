@@ -22,13 +22,13 @@ export default function UserCard({
           <Card.Title>{firstName} {lastName}</Card.Title>
           <Card.Img variant="top" src={imageUrl} alt={firstName} style={{ height: '200px' }} />
           <Card.Text>{createdOn}</Card.Text>
-          <Link href={`/users/${id}`} passHref>
+          <Link href={`/user/${id}`} passHref>
             <Button variant="primary" className="m-2">VIEW</Button>
           </Link>
-          <Link href={`/users/edit/${id}`} passHref>
+          <Link href={`/user/edit/${id}`} passHref>
             <Button variant="info">EDIT</Button>
           </Link>
-          <Link href={`/users/${id}`} passHref>
+          <Link href={`/user/${id}`} passHref>
             <Button variant="info">View</Button>
           </Link>
           <Button variant="danger" onClick={deleteThisUser} className="m-2">

@@ -8,8 +8,6 @@ import { registerUser } from '../utils/auth'; // Update with path to registerUse
 const initialState = {
   firstName: '',
   lastName: '',
-  bio: '',
-  email: '',
   createdOn: '',
   imageUrl: '',
 };
