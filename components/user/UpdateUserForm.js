@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-// import { useAuth } from '../utils/context/authContext';
-import { updateUser } from '../utils/data/userData';
+import { useAuth } from '../../utils/context/authContext';
+import { updateUser } from '../../utils/data/userData';
 // eslint-disable-next-line no-unused-vars
-import { registerUser } from '../utils/auth'; // Update with path to registerUser
+// import { registerUser } from '../utils/auth';
+// Update with path to registerUser
 
 const initialState = {
   firstName: '',
@@ -16,22 +17,18 @@ const initialState = {
 };
 
 // eslint-disable-next-line no-unused-vars
-function RegisterForm({ obj, user }) {
+function UpdateUserForm({ obj }) {
   const [formData, setFormData] = useState(initialState);
-  // const { user } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (obj.id)setFormData(obj);
-  // }, [obj, user]);
+  useEffect(() => {
+    if (obj.id)setFormData(obj);
+  }, [obj, user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (obj.id) {
-      updateUser(formData).then(() => router.push('/user'));
-    } else {
-      registerUser(formData, user.uid).then(() => updateUser(user.uid));
-    }
+    updateUser(formData, user.uid).then(() => router.push('/user'));
   };
 
   const handleChange = (e) => {
@@ -56,23 +53,19 @@ function RegisterForm({ obj, user }) {
         <Form.Label>Profile Image</Form.Label>
         <Form.Control name="imageUrl" required onChange={handleChange} />
       </Form.Group>
-      <Button type="submit">{obj.id ? 'Update' : 'Create'}</Button>
-      {/* <Button variant="primary" type="submit">
-        Submit
-      </Button> */}
+      <Button variant="primary" type="submit">
+        Update
+      </Button>
     </Form>
   );
 }
 
-RegisterForm.propTypes = {
+UpdateUserForm.propTypes = {
   obj: PropTypes.shape({
-    uid: PropTypes.string.isRequired,
     id: PropTypes.string,
-  }).isRequired,
-  user: PropTypes.shape({
     uid: PropTypes.string.isRequired,
   }).isRequired,
   // updateUser: PropTypes.func.isRequired,
 };
 
-export default RegisterForm;
+export default UpdateUserForm;
