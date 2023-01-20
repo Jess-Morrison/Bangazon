@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { getUserById } from '../../../utils/data/userData';
 import RegisterForm from '../../../components/RegisterForm';
 
-export default function EditGame() {
+export default function EditUser() {
   const [editUser, setEditUser] = useState({});
   const router = useRouter();
   const { id } = router.query;

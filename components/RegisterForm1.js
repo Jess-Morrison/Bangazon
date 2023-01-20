@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-// import { useRouter } from 'next/router';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-// import { useAuth } from '../utils/context/authContext';
+import { useAuth } from '../utils/context/authContext';
 import { updateUser } from '../utils/data/userData';
 // eslint-disable-next-line no-unused-vars
 import { registerUser } from '../utils/auth'; // Update with path to registerUser
@@ -16,22 +16,23 @@ const initialState = {
 };
 
 // eslint-disable-next-line no-unused-vars
-function RegisterForm({ obj, user }) {
+function RegisterForm({ obj, updateRegUser }) {
   const [formData, setFormData] = useState(initialState);
-  // const { user } = useAuth();
-  // const router = useRouter();
+  const { user } = useAuth();
+  const router = useRouter();
+  // console.warn(obj.id);
 
-  // useEffect(() => {
-  //   if (obj.id)setFormData(obj);
-  // }, [obj, user]);
+  useEffect(() => {
+    if (obj.id)setFormData(obj);
+  }, [obj, user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (obj.id) {
-    //   updateUser(formData).then(() => router.push('/user'));
-    // } else {
-    registerUser(formData, user).then(() => updateUser(user.uid));
-    // }
+    if (obj.id) {
+      updateUser(formData).then(() => router.push('/user'));
+    } else {
+      registerUser(formData, user).then(() => updateRegUser(user.uid));
+    }
   };
 
   const handleChange = (e) => {
@@ -66,12 +67,13 @@ function RegisterForm({ obj, user }) {
 
 RegisterForm.propTypes = {
   obj: PropTypes.shape({
-    id: PropTypes.string,
+    uid: PropTypes.string.isRequired,
+    id: PropTypes.number,
   }).isRequired,
   user: PropTypes.shape({
     uid: PropTypes.string.isRequired,
   }).isRequired,
-  // updateUser: PropTypes.func.isRequired,
+  updateRegUser: PropTypes.func.isRequired,
 };
 
 export default RegisterForm;

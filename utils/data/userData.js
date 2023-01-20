@@ -40,7 +40,7 @@ const createUser = (user, post) => new Promise((resolve, reject) => {
     firstName: post.first_name,
     lastName: post.last_name,
     image_url: post.image_url,
-    createdOn: post.acreated_on,
+    createdOn: post.created_on,
   };
   fetch(`${clientCredentials.databaseURL}/users`, {
     method: 'POST',
@@ -56,7 +56,7 @@ const createUser = (user, post) => new Promise((resolve, reject) => {
 const updateUser = (user, put, id) => new Promise((resolve, reject) => {
   const userObj = {
     id: put.id,
-    uid: put.uid,
+    uid: user.uid,
     firstName: put.first_name,
     lastName: put.last_name,
     image_url: put.image_url,

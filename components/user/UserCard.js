@@ -28,9 +28,6 @@ export default function UserCard({
           <Link href={`/user/edit/${id}`} passHref>
             <Button variant="info">EDIT</Button>
           </Link>
-          <Link href={`/user/${id}`} passHref>
-            <Button variant="info">View</Button>
-          </Link>
           <Button variant="danger" onClick={deleteThisUser} className="m-2">
             DELETE
           </Button>
