@@ -28,6 +28,11 @@ export default function UserCard({
           <Link href={`/user/edit/${id}`} passHref>
             <Button variant="info">EDIT</Button>
           </Link>
+          {/* /products?orderBy="seller"&equalTo=${id} */}
+          /The above route doesnt work because it is not the file hirearcy, dynamic routes grab the file path
+          <Link href={`/product/seller/${id}`} passHref>
+            <Button variant="info">Seller Products</Button>
+          </Link>
           <Button variant="danger" onClick={deleteThisUser} className="m-2">
             DELETE
           </Button>

@@ -18,6 +18,24 @@ const getBangazonProducts = (uid = '') => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getProductsBySeller = (id, uid = '') => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/products?orderBy="seller"&equalTo${id}`, {
+    method: 'GET',
+    headers: {
+      Authorization: uid,
+    },
+  })
+    .then((response) => (response.status === 200 ? response : false))
+    .then((response) => {
+      if (response) {
+        resolve(response.json());
+      } else {
+        throw new Error('403 response from server');
+      }
+    })
+    .catch(reject);
+});
+
 const getProductById = (id) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/products/${id}`)
     .then((response) => response.json())
@@ -89,5 +107,5 @@ const deleteProduct = (id) => new Promise((resolve, reject) => {
 
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getBangazonProducts, deleteProduct, updateProduct, createProduct, getProductById,
+  getBangazonProducts, deleteProduct, updateProduct, createProduct, getProductById, getProductsBySeller,
 };
