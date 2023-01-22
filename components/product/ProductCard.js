@@ -38,6 +38,9 @@ export default function ProductCard({
           <Link href={`/product/edit/${id}`} passHref>
             <Button variant="info">EDIT</Button>
           </Link>
+          <Link href="/orders/purchaseProduct" passHref>
+            <Button variant="info">Purchase</Button>
+          </Link>
           <Button variant="danger" onClick={deleteThisProduct} className="m-2">
             DELETE
           </Button>

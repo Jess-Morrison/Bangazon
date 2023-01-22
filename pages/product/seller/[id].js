@@ -10,6 +10,8 @@ function SellerProducts() {
   const router = useRouter();
   const { id } = router.query;
 
+  console.warn(sellerProducts);
+
   useEffect(() => {
     getProductsBySeller(id).then((setSellerProducts));
   }, []);
@@ -19,7 +21,7 @@ function SellerProducts() {
       <article className="users">
         <h1>Products</h1>
         {sellerProducts.map((sellerProduct) => (
-          <section key={`user--${sellerProduct.id}`} className="user">
+          <section key={`user--${sellerProduct.seller.id}`} className="user">
             <ProductCard
               id={sellerProduct.id}
               price={sellerProduct.price}
@@ -27,7 +29,7 @@ function SellerProducts() {
               description={sellerProduct.description}
               imageUrl={sellerProduct.image_url}
               quantityAvailable={sellerProduct.quantity_available}
-              sellerId={sellerProduct.seller_id}
+              seller={sellerProduct.seller.id}
               onUpdate={getProductsBySeller}
             />
           </section>

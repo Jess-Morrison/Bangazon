@@ -18,8 +18,8 @@ const getBangazonProducts = (uid = '') => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getProductsBySeller = (id, uid = '') => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/products?orderBy="seller"&equalTo${id}`, {
+const getProductsBySeller = (seller, uid = '') => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/products?orderBy=seller&equalTo${seller}`, {
     method: 'GET',
     headers: {
       Authorization: uid,
