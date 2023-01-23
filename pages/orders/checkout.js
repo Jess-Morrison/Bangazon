@@ -5,24 +5,23 @@ import OrderCard from '../../components/order/MainOrderCard';
 import { getBangazonOrders } from '../../utils/data/orderData';
 import { useAuth } from '../../utils/context/authContext';
 
-function PurchaseProduct() {
+function Checkout() {
   const [orders, setOrders] = useState([]);
+
   const { user } = useAuth();
 
-  const getContent = () => {
+  const getOrders = () => {
     getBangazonOrders(user.uid).then(setOrders);
   };
 
   useEffect(() => {
-    getContent();
+    getOrders();
   }, []);
-
-  // ((order) => (order.id === null))).map((filteredOrders)
 
   return (
     <>
       <article className="posts">
-        <h1>Your Orders</h1>
+        <h1>Checkout</h1>
         {orders.map((filteredOrders) => (
           <section key={`${filteredOrders.id}`} className="post">
             <OrderCard
@@ -48,4 +47,4 @@ function PurchaseProduct() {
   );
 }
 
-export default PurchaseProduct;
+export default Checkout;
