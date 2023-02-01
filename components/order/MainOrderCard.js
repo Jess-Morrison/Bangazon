@@ -31,10 +31,10 @@ export default function OrderCard({
     <>
       <Card className="text-center" style={{ width: '25rem' }}>
         <Card.Body>
-          <Card.Text>{customer}</Card.Text>
-          <Card.Text>{totalCost}</Card.Text>
-          <Card.Text>{dateCreated}</Card.Text>
-          <Card.Text>{quantity}</Card.Text>
+          <Card.Text>Customer: {customer}</Card.Text>
+          <Card.Text> Total Cost: ${totalCost}</Card.Text>
+          <Card.Text>Data Created:{dateCreated}</Card.Text>
+          <Card.Text>Quanity: {quantity}</Card.Text>
           <Link href={`/product/${id}`} passHref>
             <Button variant="primary" className="m-2">VIEW</Button>
           </Link>

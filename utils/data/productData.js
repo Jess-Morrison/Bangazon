@@ -43,6 +43,7 @@ const getProductById = (id) => new Promise((resolve, reject) => {
       resolve({
         id: data.id,
         seller: data.seller,
+        order: data.order,
         price: data.price,
         title: data.title,
         description: data.description,
@@ -51,6 +52,32 @@ const getProductById = (id) => new Promise((resolve, reject) => {
       });
     })
     .catch(reject);
+});
+
+// eslint-disable-next-line camelcase
+const getProductByOrderId = (id) => new Promise((resolve, reject) => {
+  // if (product.order === `${id}`) {
+  // eslint-disable-next-line camelcase
+  fetch(`${clientCredentials.databaseURL}/product/${id}`)
+    .then((response) => response.json())
+    .then((data) => {
+      // if (data.product.order === `${id}`) {
+      resolve({
+        id: data.id,
+        seller: data.seller,
+        order: data.order,
+        price: data.price,
+        title: data.title,
+        description: data.description,
+        imageUrl: data.image_url,
+        quantityAvailable: data.quantity_available,
+      });
+      // } else {
+      //   throw new Error('Unable to fetch data.');
+      // }
+    })
+    .catch(reject);
+  // }
 });
 
 const createProduct = (user, post) => new Promise((resolve, reject) => {
@@ -107,5 +134,5 @@ const deleteProduct = (id) => new Promise((resolve, reject) => {
 
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getBangazonProducts, deleteProduct, updateProduct, createProduct, getProductById, getProductsBySeller,
+  getBangazonProducts, deleteProduct, updateProduct, getProductByOrderId, createProduct, getProductById, getProductsBySeller,
 };

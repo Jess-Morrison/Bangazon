@@ -19,7 +19,7 @@ const getBangazonOrders = (uid = '') => new Promise((resolve, reject) => {
 });
 
 const getOrderByUser = (id, uid = '') => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/products?orderBy="seller"&equalTo${id}`, {
+  fetch(`${clientCredentials.databaseURL}/order/${id}`, {
     method: 'GET',
     headers: {
       Authorization: uid,
@@ -36,18 +36,31 @@ const getOrderByUser = (id, uid = '') => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+// const getOrderById = (id) => new Promise((resolve, reject) => {
+//   fetch(`${clientCredentials.databaseURL}/order/${id}`)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       resolve({
+//         id: data.id,
+//         customer: data.customer,
+//         orderProducts: data.order_products,
+//         totalCost: data.total_cost,
+//         title: data.title,
+//         dateCreated: data.date_created,
+//         completed: data.completed,
+//         quantity: data.quantity,
+//       });
+//     })
+//     .catch(reject);
+// });
+
 const getOrderById = (id) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/orders/${id}`)
+  fetch(`${clientCredentials.databaseURL}/orderproducts/${id}`)
     .then((response) => response.json())
     .then((data) => {
       resolve({
-        id: data.id,
-        customer: data.customer,
-        totalCost: data.total_cost,
-        title: data.title,
-        dateCreated: data.date_created,
-        completed: data.completed,
-        quantity: data.quantity,
+        orderId: data.order,
+        productId: data.product,
       });
     })
     .catch(reject);
@@ -57,6 +70,8 @@ const createOrder = (user, post) => new Promise((resolve, reject) => {
   const orderObj = {
     id: post.id,
     customer: post.customer,
+    paymentTypes: post.payment_types,
+    // orderProducts: postMessage.order_products,
     totalCost: post.total_cost,
     title: post.title,
     dateCreated: post.date_created,
@@ -79,6 +94,8 @@ const updateOrder = (user, put, id) => new Promise((resolve, reject) => {
     // id: put.id,
     id: put.id,
     customer: put.customer,
+    paymentTypes: put.payment_types,
+    // orderProducts: put.order_products,
     totalCost: put.total_cost,
     title: put.title,
     dateCreated: put.date_created,
