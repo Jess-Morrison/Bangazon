@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import ShoppingCart from '../../../components/orders/ShoppingCart';
+import ShoppingCart from '../../../components/order/ShoppingCartCard';
+// import MainOrderCard from '../../../components/order/MainOrderCard';
 import { deleteOrderProduct, activeOrdersByCustomer, updateOrderProduct } from '../../../utils/data/orderProductData';
 
 export default function CustomerShoppingCart() {
@@ -14,10 +15,10 @@ export default function CustomerShoppingCart() {
 
   const handleDecrement = (productId) => {
     const orderToUpdate = activeOrder.find((orderProduct) => orderProduct.product.id === productId);
-    if (orderToUpdate.product.quantity > 1) {
+    if (orderToUpdate.order.quantity > 1) {
       const updatedOrderProducts = activeOrder.map((orderProduct) => {
         if (orderProduct.product.id === productId) {
-          return { ...orderProduct, quantity: orderProduct.product.quantity - 1 };
+          return { ...orderProduct, quantity: orderProduct.order.quantity - 1 };
         }
         return orderProduct;
       });
@@ -25,7 +26,7 @@ export default function CustomerShoppingCart() {
       updatedOrderProducts(orderToUpdate.id, {
         product: orderToUpdate.product.id,
         order: orderToUpdate.order.id,
-        quantity: orderToUpdate.product.quantity - 1,
+        quantity: orderToUpdate.order.quantity - 1,
       }).then(() => setActiveOrder(orderToUpdate));
     } else {
       deleteOrderProduct(orderToUpdate.id).then(() => {
@@ -37,7 +38,7 @@ export default function CustomerShoppingCart() {
   const handleIncrement = (productId) => {
     const updatedOrderProducts = activeOrder.map((orderProduct) => {
       if (orderProduct.product.id === productId) {
-        return { ...orderProduct, quantity: orderProduct.product.quantity + 1 };
+        return { ...orderProduct, quantity: orderProduct.order.quantity + 1 };
       }
       return orderProduct;
     });
@@ -46,7 +47,7 @@ export default function CustomerShoppingCart() {
     updateOrderProduct(orderToUpdate.id, {
       product: orderToUpdate.product.id,
       order: orderToUpdate.order.id,
-      quantity: orderToUpdate.product.quantity,
+      quantity: orderToUpdate.order.quantity,
     }).then(() => setActiveOrder(updatedOrderProducts));
   };
 

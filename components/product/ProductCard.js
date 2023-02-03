@@ -1,9 +1,12 @@
-import React from 'react';
+// import React from 'react';
 // import React, { useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+// import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
+import { getBangazonUsers } from '../../utils/data/userData';
 // import { ShoppingCartContext } from '../shoppingCartContext';
 // import { deleteProduct } from '../../utils/data/productData';
 // import { getBangazonProducts } from '../../utils/data/productData';
@@ -27,6 +30,13 @@ export default function ProductCard({
   //   }
   // };
   // console.warn(productObj);
+  // const router = useRouter();
+  // const { user } = router.query;
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    getBangazonUsers().then((setUsers));
+  }, []);
+  // console.warn(user.id);
 
   return (
 
@@ -45,9 +55,11 @@ export default function ProductCard({
           <Link href={`/product/edit/${id}`} passHref>
             <Button variant="info">EDIT</Button>
           </Link>
-          <Link href="/order/cart" passHref>
-            <Button variant="info">Purchase</Button>
-          </Link>
+          {users.map((user) => (
+            <Link href={`/order/shoppingCart/${user.id}`} passHref>
+              <Button variant="info">Purchase</Button>
+            </Link>
+          ))}
           {/* <Button variant="danger" onClick={deleteThisProduct} className="m-2">
             DELETE
           </Button> */}

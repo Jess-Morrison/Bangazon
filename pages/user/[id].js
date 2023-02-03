@@ -7,7 +7,7 @@ export default function ViewUser() {
   const [viewUsers, setViewUser] = useState([]);
   const router = useRouter();
   const { id } = router.query;
-  console.warn(viewUsers.firstName);
+  // console.warn(viewUsers.firstName);
 
   useEffect(() => {
     getUserById(id).then(setViewUser);

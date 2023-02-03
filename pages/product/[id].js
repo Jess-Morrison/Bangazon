@@ -7,7 +7,7 @@ export default function ViewProduct() {
   const [viewProducts, setViewProducts] = useState([]);
   const router = useRouter();
   const { id } = router.query;
-  console.warn(viewProducts.price);
+  // console.warn(viewProducts.price);
 
   useEffect(() => {
     getProductById(id).then(setViewProducts);

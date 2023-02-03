@@ -78,7 +78,7 @@ const getProductByOrderId = (id) => new Promise((resolve, reject) => {
   // }
 });
 
-const createProduct = (user, post) => new Promise((resolve, reject) => {
+const createProduct = (product, post) => new Promise((resolve, reject) => {
   const productObj = {
     id: post.id,
     seller: post.seller,

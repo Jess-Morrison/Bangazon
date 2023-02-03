@@ -10,7 +10,7 @@ function SellerProducts() {
   const router = useRouter();
   const { id } = router.query;
 
-  console.warn(sellerProducts);
+  // console.warn(sellerProducts);
 
   useEffect(() => {
     getProductsBySeller(id).then((setSellerProducts));
