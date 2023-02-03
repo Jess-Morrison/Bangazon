@@ -20,6 +20,43 @@ const getBangazonOrderProducts = (id, uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const activeOrdersByCustomer = (customerId) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/orderByCustomer/${customerId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      resolve({
+        id: data.id,
+        customer: data.customer,
+        order: data.order,
+        product: data.product,
+      });
+    })
+    .catch((error) => reject(error));
+});
+
+const updateOrderProduct = (orderProductId, orderProduct) => new Promise((resolve, reject) => {
+  const orderProductObj = {
+    product: orderProduct.product,
+    customer: orderProduct.customer,
+    order: orderProduct.order,
+  };
+  fetch(`${clientCredentials.databaseURL}/orderproducts/${orderProductId}`, {
+    method: 'PUT',
+    body: JSON.stringify(orderProductObj),
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((response) => resolve(response))
+    .catch(reject);
+});
+
+const deleteOrderProduct = (orderProductId) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/orderproducts/${orderProductId}`, {
+    method: 'DELETE',
+  })
+    .then(resolve)
+    .catch(reject);
+});
+
 // const getBangazonOrderProducts = (orderId) => new Promise((resolve, reject) => {
 //   fetch(`${clientCredentials.databaseURL}/orders/shoppingCart/${orderId}`)
 //     .then((response) => response.json())
@@ -41,5 +78,7 @@ const getBangazonOrderProducts = (id, uid) => new Promise((resolve, reject) => {
 //     }).catch((error) => reject(error));
 // });
 
-export default getBangazonOrderProducts;
+export {
+  getBangazonOrderProducts, activeOrdersByCustomer, updateOrderProduct, deleteOrderProduct,
+};
 // getOrderDetails,

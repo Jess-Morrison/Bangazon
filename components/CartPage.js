@@ -1,23 +1,33 @@
-import React, { useContext } from 'react';
+// import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
-import { ShoppingCartContext } from './shoppingCartContext';
+import { getBangazonProducts } from '../utils/data/productData';
+// import { ShoppingCartContext } from './shoppingCartContext';
 
 function Cart({ cartProducts }) {
-  const { setCartProductIds, setCartProducts } = useContext(ShoppingCartContext);
+  const [orderProducts, setCartProducts] = useState([]);
+  const getProducts = (id) => {
+    getBangazonProducts(id).then(setCartProducts);
+  };
+  useEffect(() => {
+    getProducts();
+  }, []);
+  // const { setCartProductIds, setCartProducts } = useContext(ShoppingCartContext);
 
   const onRemove = (id) => {
-    setCartProducts((products) => products.filter((product) => product.id !== id));
-    setCartProductIds((productIds) => productIds.filter((productId) => productId !== id));
+    orderProducts((products) => products.filter((product) => product.id !== id));
+    // setCartProductIds((productIds) => productIds.filter((productId) => productId !== id));
   };
+  // const cartLength = (cartProducts.length);
 
   return (
     <main className="block col-2">
       <h2>My Cart</h2>
-      <div className="row">
-        {cartProducts.length === 0 && <div>Cart Is Empty</div>}
-      </div>
+      {/* <div className="row">
+        {cartLength === 0 && <div>Cart Is Empty</div>}
+      </div> */}
       {cartProducts.map((product) => (
         <div key={product?.id}>
           <div>

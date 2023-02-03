@@ -43,7 +43,6 @@ const getProductById = (id) => new Promise((resolve, reject) => {
       resolve({
         id: data.id,
         seller: data.seller,
-        order: data.order,
         price: data.price,
         title: data.title,
         description: data.description,
@@ -65,7 +64,6 @@ const getProductByOrderId = (id) => new Promise((resolve, reject) => {
       resolve({
         id: data.id,
         seller: data.seller,
-        order: data.order,
         price: data.price,
         title: data.title,
         description: data.description,

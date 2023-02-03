@@ -1,20 +1,20 @@
-import React, { useContext } from 'react';
-// import React, { useEffect, useState } from 'react';
+// import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 // import ProductCard from '../../../components/product/ProductCard';
-// import { getBangazonProducts } from '../../../utils/data/productData';
-import Cart from '../../../components/CartPage';
-import { ShoppingCartContext } from '../../../components/shoppingCartContext';
+import { getBangazonProducts } from '../../../utils/data/productData';
+// import Cart from '../../../components/CartPage';
+// import { ShoppingCartContext } from '../../../components/shoppingCartContext';
 import OrderForm from '../../../components/order/OrderForm';
 
 export default function CartView() {
-  // const [orderProducts, setOrderProducts] = useState([]);
-  // const getProducts = (id) => {
-  //   getBangazonProducts(id).then(setOrderProducts);
-  // };
-  // useEffect(() => {
-  //   getProducts();
-  // }, []);
-  const { cartProducts, cartProductIds } = useContext(ShoppingCartContext);
+  const [orderProducts, setOrderProducts] = useState([]);
+  const getProducts = (id) => {
+    getBangazonProducts(id).then(setOrderProducts);
+  };
+  useEffect(() => {
+    getProducts();
+  }, []);
+  // const { cartProducts, cartProductIds } = useContext(ShoppingCartContext);
   // const { cartProducts } = useContext(ShoppingCartContext);
   // console.warn(cartProducts);
 
@@ -26,8 +26,8 @@ export default function CartView() {
 
   return (
     <div>
-      <Cart cartProducts={cartProducts} />
-      {cartProductIds.length !== 0 && <OrderForm cartProductIds={cartProductIds} cartProducts={cartProducts} />}
+      {/* <Cart orderProducts={orderProducts} /> */}
+      {orderProducts.length !== 0 && <OrderForm orderProducts={orderProducts} />}
     </div>
   );
 }

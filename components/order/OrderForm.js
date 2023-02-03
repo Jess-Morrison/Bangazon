@@ -1,37 +1,35 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { Button, Form } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import { useAuth } from '../../utils/context/authContext';
+// import { useAuth } from '../../utils/context/authContext';
 import { getPayment } from '../../utils/data/paymentData';
-import { createOrder } from '../../utils/data/orderData';
+import { createOrder, updateOrder } from '../../utils/data/orderData';
 
-function OrderForm({ cartItemIds, cartItems }) {
+const initialState = {
+  id: null,
+  customer: '',
+  paymentTypes: '',
+  totalCost: 0,
+  dateCreated: '',
+  completed: false,
+  quantity: 0,
+};
+
+const OrderForm = ({ orderObj }) => {
+  const [order, setOrder] = useState(initialState);
   const [paymentTypes, setPaymentTypes] = useState([]);
-  const { user } = useAuth();
   const router = useRouter();
-  const [formInput, setFormInput] = useState({
-    paymentType: {
-      id: 0,
-      paymentName: '',
-      accountNumber: 0,
-    },
-  });
-  let total = 0;
-  if (cartItems.length) {
-    cartItems.forEach((product) => {
-      total += Number(product.price);
-    });
-  }
 
-  useEffect(() => {
-    getPayment(user.id).then(setPaymentTypes);
-  }, [user]);
+  useEffect((id) => {
+    getPayment(id).then(setPaymentTypes);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormInput((prevState) => ({
+    setOrder((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -39,73 +37,85 @@ function OrderForm({ cartItemIds, cartItems }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createOrder(user, cartItemIds, total, formInput).then(() => {
-      router.replace(`/users/${user.id}`);
-    });
+    if (orderObj.id) {
+      updateOrder(order, orderObj.id).then((id) => router.push(`/order/ShoppingCart/${id}`));
+    } else {
+      createOrder(order).then((id) => router.push(`/order/ShoppingCart/${id}`));
+    }
   };
 
+  const getAndSet = () => {
+    if (orderObj.id) {
+      setOrder(orderObj);
+    }
+  };
+  useEffect(() => {
+    getAndSet();
+  }, [orderObj]);
+
+  let total = 0;
+  if (order.length) {
+    order.forEach((orderproduct) => {
+      total += Number(orderproduct.price);
+    });
+  }
+
   return (
-    <aside className="col-2">
-      <h3>Your Order</h3>
-      <h3>Total: ${total}</h3>
-      <Form onSubmit={handleSubmit} id={total}>
-        {paymentTypes ? (
-          <>
-            <Form.Group className="mb-3">
-              <Form.Label>Select Payment Method</Form.Label>
-              <Form.Select
-                name="paymentType"
-                onChange={handleChange}
-                className="mb-3"
-                value={formInput.paymentType?.id}
-                required
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label>Your Order</Form.Label>
+          <Form.Control name="customer" required value={order.customer} onChange={handleChange} />
+          <Form.Label>Date Created</Form.Label>
+          <Form.Control name="dateCreated" type="date" required value={order.dateCreated} onChange={handleChange} />
+          <Form.Label>Quanity</Form.Label>
+          <Form.Control name="imageUrl" required value={order.quantity} onChange={handleChange} />
+          <Form.Label>Post Content</Form.Label>
+          <Form.Control name="totalCost" required value={total} onChange={handleChange} />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Select Payment Method</Form.Label>
+          <Form.Select
+            name="paymentTypes"
+            onChange={handleChange}
+            className="mb-3"
+            value={order.paymentTypes?.id}
+            required
+          >
+            <option value="">Select payment</option>
+            {paymentTypes.map((paymentType) => (
+              <option
+                defaultValue={paymentType.id === order.paymentType}
+                key={paymentType.id}
+                value={paymentType.id}
               >
-                <option value="">Select payment</option>
-                {paymentTypes.map((paymentType) => (
-                  <option
-                    defaultValue={paymentType.id === formInput.paymentType}
-                    key={paymentType.id}
-                    value={paymentType.id}
-                  >
-                    {paymentType.label}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-            <Button variant="warning" type="submit">
-              Place Order
-            </Button>
-          </>
-        ) : (
-          <>
-            <p>Please Add Payment Method</p>
-            <Link href="/paymentTypes/new" passHref>
-              <Button variant="success">Add</Button>
-            </Link>
-          </>
-        )}
+                {paymentType.label}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Order?
+        </Button>
       </Form>
-    </aside>
+    </>
   );
-}
+};
 
 OrderForm.propTypes = {
-  cartItemIds: PropTypes.arrayOf(PropTypes.number).isRequired,
-  cartItems: PropTypes.arrayOf(PropTypes.shape({
-    orderObj: PropTypes.shape({
-      id: PropTypes.number,
-      totalCost: PropTypes.total_cost,
-      title: PropTypes.string,
-      imageUrl: PropTypes.string,
-      price: PropTypes.string,
-      quantity: PropTypes.number,
-      seller: PropTypes.shape({
-        id: PropTypes.number,
-        firstName: PropTypes.string,
-        lastName: PropTypes.string,
-      }),
-    }),
-  })).isRequired,
+  orderObj: PropTypes.shape({
+    id: PropTypes.number,
+    customer: PropTypes.string,
+    paymentTypes: PropTypes.string,
+    totalCost: PropTypes.number,
+    dateCreated: PropTypes.string,
+    completed: PropTypes.bool,
+    quantity: PropTypes.number,
+  }),
+};
+
+OrderForm.defaultProps = {
+  orderObj: initialState,
 };
 
 export default OrderForm;

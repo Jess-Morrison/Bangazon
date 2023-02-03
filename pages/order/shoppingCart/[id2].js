@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 // import { Button } from 'react-bootstrap';
 import ProductCard from '../../../components/product/ProductCard';
-import { getProductByOrderId } from '../../../utils/data/productData';
+// import { getProductByOrderId } from '../../../utils/data/productData';
+import { getBangazonProducts } from '../../../utils/data/productData';
 // import { getBangazonOrders } from '../../../utils/data/orderData';
 // import getOrderById from '../../../utils/data/orderProductData';
 // import { getProductByOrderId } from '../../../utils/data/productData';
@@ -17,7 +18,7 @@ function ShoppingCart() {
   const { id } = useRouter();
 
   const getProducts = () => {
-    getProductByOrderId(id).then(setOrderProducts);
+    getBangazonProducts(id).then(setOrderProducts);
   };
   // console.warn(orderProducts);
   // Keep getting undefined, is this because I am trying to dot notate on a object?
@@ -61,7 +62,7 @@ function ShoppingCart() {
               imageUrl={filteredOrderProducts.image_url}
               description={filteredOrderProducts.description}
               quantityAvailable={filteredOrderProducts.quantity_available}
-              onUpdate={getProductByOrderId}
+              onUpdate={getBangazonProducts}
             />
             {/* <Button
                         onClick={() => {
