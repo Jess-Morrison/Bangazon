@@ -78,7 +78,7 @@ const getProductByOrderId = (id) => new Promise((resolve, reject) => {
   // }
 });
 
-const createProduct = (product, post) => new Promise((resolve, reject) => {
+const createProduct = (post) => new Promise((resolve, reject) => {
   const productObj = {
     id: post.id,
     seller: post.seller,
@@ -98,6 +98,18 @@ const createProduct = (product, post) => new Promise((resolve, reject) => {
     .then((resp) => resolve(resp.json()))
     .catch((error) => reject(error));
 });
+
+// const createProduct = (product) => new Promise((resolve, reject) => {
+//   fetch(`${clientCredentials.databaseURL}/products`, {
+//     method: 'POST',
+//     body: JSON.stringify(product),
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   })
+//     .then((resp) => resolve(resp.json()))
+//     .catch((error) => reject(error));
+// });
 
 const updateProduct = (user, put, id) => new Promise((resolve, reject) => {
   const productObj = {

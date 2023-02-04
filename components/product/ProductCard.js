@@ -36,7 +36,13 @@ export default function ProductCard({
   useEffect(() => {
     getBangazonUsers().then((setUsers));
   }, []);
-  // console.warn(user.id);
+
+  // console.warn(users);
+
+  let userId;
+  users.forEach((user) => {
+    userId = user.id;
+  });
 
   return (
 
@@ -55,11 +61,11 @@ export default function ProductCard({
           <Link href={`/product/edit/${id}`} passHref>
             <Button variant="info">EDIT</Button>
           </Link>
-          {users.map((user) => (
-            <Link href={`/order/shoppingCart/${user.id}`} passHref>
-              <Button variant="info">Purchase</Button>
-            </Link>
-          ))}
+          {/* {users.map((user) => ( */}
+          <Link href={`/order/shoppingCart/${userId}`} passHref>
+            <Button variant="info">Purchase</Button>
+          </Link>
+          {/* ))} */}
           {/* <Button variant="danger" onClick={deleteThisProduct} className="m-2">
             DELETE
           </Button> */}

@@ -20,8 +20,22 @@ const getBangazonOrderProducts = (id, uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+// const activeOrdersByCustomer = (customerId) => new Promise((resolve, reject) => {
+//   fetch(`${clientCredentials.databaseURL}/orderByCustomer/${customerId}`)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       resolve({
+//         id: data.id,
+//         customer: data.customer,
+//         order: data.order,
+//         product: data.product,
+//       });
+//     })
+//     .catch((error) => reject(error));
+// });
+
 const activeOrdersByCustomer = (customerId) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/orderByCustomer/${customerId}`)
+  fetch(`${clientCredentials.databaseURL}/orders?completed=False&customer=${customerId}`)
     .then((response) => response.json())
     .then((data) => {
       resolve({

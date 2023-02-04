@@ -10,6 +10,8 @@ import { updateOrder } from '../../utils/data/orderData';
 import { getPayment } from '../../utils/data/paymentData';
 import { useAuth } from '../../utils/context/authContext';
 
+// the logic is in this card
+
 export default function ShoppingCart({
   orderProductObj, handleDecrement, handleIncrement, handleDelete,
 }) {
@@ -82,7 +84,13 @@ export default function ShoppingCart({
                       {product.price} {quantity > 1 ? 'each' : ''}
                     </TableCell>
                     <TableCell align="center">
-                      <Button color="error" size="small" fontSize="small" onClick={() => handleDelete(orderProductObj[0].id)}>
+                      <Button
+                        color="error"
+                        size="small"
+                        fontSize="small"
+                        onClick={() => handleDelete(product.id)}
+                        // (orderProductObj[0].id)
+                      >
                         <DeleteIcon />
                       </Button>
                     </TableCell>
@@ -121,7 +129,7 @@ export default function ShoppingCart({
         }}
         >
           <h2>Cart is Empty</h2>
-          <Button variant="outlined" color="success" onClick={() => router.push('/')}>Continue Shopping?</Button>
+          <Button variant="outlined" color="success" onClick={() => router.push('/product')}>Continue Shopping?</Button>
         </div>
       )}
     </>
@@ -146,12 +154,12 @@ ShoppingCart.propTypes = {
         dateCreated: PropTypes.string,
         completed: PropTypes.bool,
         totalCost: PropTypes.number,
-        // quantity: PropTypes.number,
+        quantity: PropTypes.number,
         customer: PropTypes.number,
         paymentTypes: PropTypes.number,
         products: PropTypes.arrayOf(PropTypes.number),
       }),
-      quantity: PropTypes.number,
+      // quantity: PropTypes.number,
     }),
   ).isRequired,
   handleDecrement: PropTypes.func.isRequired,

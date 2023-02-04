@@ -36,6 +36,25 @@ const getOrderByUser = (id, uid = '') => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getOrderCompletedByUser = (customerId, uid = '') => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/orders?completed=True`, {
+    // fetch(`${clientCredentials.databaseURL}/orders?completed=True&customer=${customerId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: uid,
+    },
+  })
+    .then((response) => (response.status === 200 ? response : false))
+    .then((response) => {
+      if (response) {
+        resolve(response.json());
+      } else {
+        throw new Error('403 response from server');
+      }
+    })
+    .catch(reject);
+});
+
 // const getOrderById = (id) => new Promise((resolve, reject) => {
 //   fetch(`${clientCredentials.databaseURL}/order/${id}`)
 //     .then((response) => response.json())
@@ -73,6 +92,7 @@ const createOrder = (user, post) => new Promise((resolve, reject) => {
     paymentTypes: post.payment_types,
     // orderProducts: postMessage.order_products,
     totalCost: post.total_cost,
+    products: post.products,
     title: post.title,
     dateCreated: post.date_created,
     completed: post.completed,
@@ -95,6 +115,7 @@ const updateOrder = (user, put, id) => new Promise((resolve, reject) => {
     id: put.id,
     customer: put.customer,
     paymentTypes: put.payment_types,
+    products: put.products,
     // orderProducts: put.order_products,
     totalCost: put.total_cost,
     title: put.title,
@@ -147,5 +168,5 @@ const RemoveProduct = (productId, uid) => new Promise((resolve, reject) => {
 });
 
 export {
-  getBangazonOrders, updateOrder, createOrder, getOrderById, getOrderByUser, AddProduct, RemoveProduct,
+  getBangazonOrders, updateOrder, createOrder, getOrderById, getOrderByUser, AddProduct, RemoveProduct, getOrderCompletedByUser,
 };

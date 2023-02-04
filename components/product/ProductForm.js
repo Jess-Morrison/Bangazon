@@ -11,7 +11,7 @@ import { getBangazonUsers } from '../../utils/data/userData';
 
 const initialState = {
 
-  id: null,
+  // id: '',
   seller: '',
   title: '',
   imageUrl: '',
@@ -32,7 +32,7 @@ const ProductForm = ({ productObj }) => {
     getBangazonUsers(id).then(setSeller);
   }, []);
 
-  console.warn(sellers);
+  // console.warn(sellers);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

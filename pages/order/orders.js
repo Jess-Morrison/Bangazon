@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 // import { Button } from 'react-bootstrap';
 import OrderCard from '../../components/order/MainOrderCard';
-import { getBangazonOrders } from '../../utils/data/orderData';
+import { getOrderCompletedByUser } from '../../utils/data/orderData';
 import { useAuth } from '../../utils/context/authContext';
 
 function Orders() {
@@ -10,7 +10,7 @@ function Orders() {
   const { user } = useAuth();
 
   const getContent = () => {
-    getBangazonOrders(user.uid).then(setOrders);
+    getOrderCompletedByUser(user).then(setOrders);
   };
 
   useEffect(() => {
@@ -22,7 +22,8 @@ function Orders() {
   return (
     <>
       <article className="posts">
-        <h1>Your Orders</h1>
+        <h1>Completed Orders</h1>
+        <h3>*Upcoming feature will show completed orders by user*</h3>
         {orders.map((filteredOrders) => (
           <section key={`${filteredOrders.id}`} className="post">
             <OrderCard
@@ -32,7 +33,7 @@ function Orders() {
               dateCreated={filteredOrders.date_created}
               completed={filteredOrders.completed}
               quantity={filteredOrders.quantity}
-              onUpdate={getBangazonOrders}
+              onUpdate={getOrderCompletedByUser}
             />
             {/* <Button
               onClick={() => {
